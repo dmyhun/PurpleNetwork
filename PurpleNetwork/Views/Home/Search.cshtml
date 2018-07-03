@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+
+
+<h2>Search</h2>
+<!--
+@using (Ajax.BeginForm("UserSearch", new AjaxOptions { UpdateTargetId = "results" }))
+{
+    <input type="text" name="searchKeyWords" id="searchKeyWords" value="" placeholder="Enter name, last name or email..." />
+    <button type="submit" id="searchBtn">Search now!</button>
+}
+-->
+    <form>
+        <input type="text" size="30" onkeyup="showResult(this.value)">        
+    </form>
+
+
+<div id="searchListDiv"></div>
+
+<div id="loadingDiv" class="preloader">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.search-link').addClass('active');
+            getajax();
+        });
+
+        $(window).scroll(function () {
+            if (($(window).scrollTop() + $(window).height() > $(document).height() - 100) && !noMoreData && !inProgress) {
+                getajax();
+            }
+        });
+
+        var blockNumber = 1;
+        var noMoreData = false;
+        var inProgress = false;
+
+        var showResult = function (keyword) {
+            $("#searchListDiv").empty();
+            blockNumber = 1;
+            getajax(keyword);
+        }
+
+        var getajax = function (searchKeyWords) {
+            if (searchKeyWords == null)
+                searchKeyWords = "";
+        inProgress = true;
+        $("#loadingDiv").show();
+        $.post("@Url.Action("Search_InfinateScroll",
+        "Home")", { "blockNumber": blockNumber, "searchKeyWords": searchKeyWords},
+                function (data) {
+                    blockNumber = blockNumber + 1;
+                    noMoreData = data.NoMoreData;
+                    $("#searchListDiv").append(data.HTMLString);
+                    $("#loadingDiv").hide();
+                    inProgress = false;
+                });
+    }
+    </script>
+}

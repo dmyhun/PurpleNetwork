@@ -1,0 +1,190 @@
+﻿body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+#scrollToTopBtn {
+    position: fixed;    
+    bottom: 30px;   
+    left: 20px;
+    display: none;
+}
+
+nav ul li a.active{
+ text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 40px #ff00de, 0 0 80px #ff00de, 0 0 90px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+}
+
+ul.sidenav li a.active {
+    color: rebeccapurple;
+}
+
+
+.main {
+    flex: 1 0 auto;
+    padding: 20px 0;
+}
+
+.main_btn {
+    width:100%;
+}
+
+.preloader {
+    padding: 0 45%;
+}
+
+.user-avatar {
+    margin-bottom:25px;
+}
+
+.add-publication-form {
+    padding-top: 40px;
+    margin-bottom: 20px;
+}
+
+#loadingDiv {
+    text-align: center; 
+    display: none; 
+    margin-bottom: 20px;
+}
+
+#modal_addPublication {
+    padding-bottom: 22px;
+}
+
+.publication-wrapper {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.publication {
+    display: flex;
+    overflow: auto;
+    max-height: 500px;
+}
+
+.publication-content {
+    width: 80%;
+    padding-left: 20px;
+    word-wrap: break-word;
+}
+
+.publication-author {
+     width: 20%;
+}
+
+
+.card .card-action a.moreInfoSubBtn {
+    color: blueviolet !important;
+}
+
+.card .card-action a.deleteSubBtn {
+    color: aqua !important;
+}
+
+.loginOrRegisterWrapper {
+   
+    padding: 20px;
+    height: 100%;
+}
+
+.tabs .tab a {
+    color: #ffffff;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    color: #ffffff;
+    background-color: rgba(255,255,255,.2);
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+   background-color: rgba(255,255,255,.3);
+}
+
+.tabs .indicator {
+    background-color:#4a148c;
+}
+
+.input-field input {
+   color: white;
+}
+
+ .input-field input + label {
+   color: white !important;
+ }
+
+ /* label underline focus color */
+ .row .input-field input:focus {
+   border-bottom: 1px solid white !important;
+   box-shadow: 0 1px 0 0 white !important
+ }
+
+@keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+    100% {
+        background-position: -600px 600px /* анимируем свойство background-position */
+    }
+}
+/* Mozilla Firefox 5.0+ */
+@-moz-keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+    100% {
+        background-position: -600px 600px
+    }
+}
+/* Safari 4.0+, Chrome 4.0+ */
+@-webkit-keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+    100% {
+        background-position: -600px 600px
+    }
+}
+/* Opera 12.0+ */
+@-o-keyframes animatedBackground {
+    0 {
+        background-position: 0 0
+    }
+    100% {
+        background-position: -600px 600px
+    }
+}
+
+#fon {
+    height: 100%; /* задаем произвольную высоту и ширину блока */
+    width: 100%;
+    background-image: url(Images/purple-pattern-3.jpg);
+    animation: animatedBackground 60s linear infinite;
+    -moz-animation: animatedBackground 60s linear infinite;
+    -webkit-animation: animatedBackground 60s linear infinite;
+    -o-animation: animatedBackground 60s linear infinite;
+    position: absolute;
+    z-index: -1;
+    /* так же, как и с @keyframes, префикс -ms тут ни к чему */
+}
+
+@media (max-width: 600px) { 
+    .publication-author, .publication-content, .publication-image {
+        width: 100%;
+    }
+
+    .publication {
+        flex-direction: column;
+    }
+
+    .publication-content  {
+        padding-left: 0;
+    }
+
+    .loginOrRegisterWrapper {
+      margin-top: 0;
+    }
+}
+
+

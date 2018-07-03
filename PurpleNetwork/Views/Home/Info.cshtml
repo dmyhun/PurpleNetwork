@@ -1,0 +1,116 @@
+﻿@model PurpleNetwork.Models.UserViewModel
+
+<div class="user-info">
+    <div class="row">
+        <div class="col m4 l3 s12">
+            <img class="circle responsive-img user-avatar materialboxed" src="@Model.ImageUrl">
+            @if (!Model.IsMySubscription && !Model.IsMe)
+            {
+                <form action="/Home/AddSubscription" method="post">
+                    <input type="hidden" value="@Model.Email" name="following" />
+                    <p>
+                        <button type="submit" class="waves-effect waves-light btn purple accent-2 main_btn"><i class="material-icons left">add</i>Subcribe</button>
+                    </p>
+                </form>
+            }
+        </div>
+        <div class="col m8 l9 s12 ">
+            <h3>@Model.FirstName<br />@Model.LastName</h3>
+            <p class="flow-text">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+</div>
+
+
+@if (Model.IsMe)
+{
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light purple pulse modal-trigger" href="#modal_addPublication"><i class="material-icons">add</i></a>
+    </div>
+
+    <div id="modal_addPublication" class="modal">
+        <div class="modal-content">
+            <a class="modal-close right"><i class="material-icons black-text">close</i></a>
+            <h4>Add new publication</h4>
+            @using (Html.BeginForm("AddPublication", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" value="http://ozoopole.pzd.pl/wp-content/uploads/2015/10/information-icon.png" name="ImageUrl" />
+                    <input type="hidden" value="@Model.Email" name="UserId" />
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" name="Name" id="Name" class="validate" placeholder="Enter the title of your post" />
+                            <label for="Name">Title</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="Description" name="Description" class="materialize-textarea" placeholder="Text here smth interesting. What do you feel? What are you thinking about?"></textarea>
+                            <label for="Description">Details</label>
+                        </div>
+                    </div>
+                    <div class="file-field input-field">
+                        <div class="btn purple">
+                            <span>File</span>
+                            <input type="file" name="uploadFile" accept="image/*">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <button type="submit" class="waves-effect waves-light btn purple right">Add publication</button>
+            }
+        </div>
+    </div>   
+}
+
+<div class="user-publications" id="publicationListDiv"></div>
+<div id="loadingDiv" class="preloader">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+            getajax();
+            $('.materialboxed').materialbox();
+        });
+
+        var BlockNumber = 1;  //Infinate Scroll starts from second block
+        var NoMoreData = false;
+        var inProgress = false;
+
+        var getajax = function () {
+            inProgress = true;
+            $("#loadingDiv").show();
+            $.post("@Url.Action("Publication_InfinateScroll", "Home")",
+                { "email": "@Model.Email", "blockNumber": BlockNumber },
+                function (data) {
+                    BlockNumber = BlockNumber + 1;
+                    NoMoreData = data.NoMoreData;
+                    $("#publicationListDiv").append(data.HTMLString);
+                    $("#loadingDiv").hide();
+                    inProgress = false;
+                });
+        }
+
+        $(window).scroll(function () {
+            if (($(window).scrollTop() + $(window).height() > $(document).height() - 100) && !NoMoreData && !inProgress) {
+                inProgress = true;
+                $("#loadingDiv").show();
+                getajax();
+            }
+        });
+</script>
+    }

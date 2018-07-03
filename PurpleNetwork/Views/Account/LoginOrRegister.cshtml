@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LoginOrRegister</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link rel="stylesheet" href="~/Content/Site.css" />
+</head>
+<body>
+    <div id="fon"></div>
+    <div class="container">
+        <div class="loginOrRegisterWrapper">
+            <div class="row">
+                <div class="col s12 l6 offset-l3">
+                    <ul class="tabs purple">
+                        <li class="tab col m6 s12">
+                            <a href="#login">Login</a>
+                        </li>
+                        <li class="tab col m6 s12">
+                            <a href="#register">Register</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--Login Form-->
+                <div id="login" class="col s12">
+                    <div class="row">
+                        <div class="col s12 l6 offset-l3">
+                            <form action="/Account/Login" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+                                <div class="input-field col s12 white-text">
+                                    <input placeholder="Enter email" name="EmailLogin" type="text" class="validate">
+                                    <label for="EmailLogin">Email</label>
+                                    @Html.ValidationMessage("EmailLogin", new { @class = "red-text" })
+                                </div>
+                                <div class="input-field col s12 white-text">
+                                    <input placeholder="Enter password" name="PasswordLogin" type="password" class="validate">
+                                    <label for="PasswordLogin">Email</label>
+                                    @Html.ValidationMessage("PasswordLogin", new { @class = "red-text" })
+                                </div>
+                                <button type="submit" class="btn waves-effect purple darken-3 waves-light col s12" />Log In</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--Register Form Form-->
+                <div id="register" class="col s12">
+                    <div class="row">
+                        <div class="col s12 l6 offset-l3">
+                            <form action="/Account/Register" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+                                <div class="input-field col s12">
+                                    <input placeholder="Enter First Name" name="FirstName" type="text" class="validate">
+                                    <label for="FirstName">First Name</label>
+                                    @Html.ValidationMessage("FirstName", new { @class = "red-text"})
+                                </div>
+                                <div class="input-field col s12">
+                                    <input placeholder="Enter Last Name" name="LastName" type="text" class="validate">
+                                    <label for="LastName">Last Name</label>
+                                    @Html.ValidationMessage("LastName", new { @class = "red-text" })
+                                </div>
+                                <div class="input-field col s12">
+                                    <input placeholder="Enter email" name="EmailRegister" type="text" class="validate">
+                                    <label for="EmailRegister">Email</label>
+                                    @Html.ValidationMessage("EmailRegister", new { @class = "red-text" })
+                                </div>
+                                <div class="input-field col s12">
+                                    <input placeholder="Enter password" name="PasswordRegister" type="password" class="validate">
+                                    <label for="PasswordRegister">Password</label>
+                                    @Html.ValidationMessage("PasswordRegister", new { @class = "red-text" })
+                                </div>
+                                <div class="input-field col s12">
+                                    <input placeholder="Enter password aqain" name="PasswordConfirm" type="password">
+                                    <label for="PasswordConfirm">Confirm Password</label>
+                                    @Html.ValidationMessage("PasswordConfirm", new { @class = "red-text" })
+                                </div>
+                                <button type="submit" class="btn waves-effect waves-light purple darken-3 col s12" />Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.tabs').tabs();
+        });
+    </script>
+</body>
+</html>
+
+
+   

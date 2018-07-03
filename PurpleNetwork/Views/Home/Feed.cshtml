@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PurpleNetwork.Models.PublicationViewModel>
+
+
+@{
+    ViewBag.Title = "Feed";
+}
+
+<h2>Feed</h2>
+<div id="publicationListDiv">
+  
+</div>
+<div id="loadingDiv" class="preloader">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.feed-link').addClass('active');
+            getajax();
+        });
+
+        $(window).scroll(function () {
+            if (($(window).scrollTop() + $(window).height() > $(document).height() - 100) && !noMoreData && !inProgress) {
+                getajax();
+            }
+        });
+
+        var blockNumber = 1;
+        var noMoreData = false;
+        var inProgress = false;
+
+        var getajax = function (searchKeyWords) {
+            inProgress = true;
+            $("#loadingDiv").show();
+            $.post("@Url.Action("Feed_InfinateScroll",
+            "Home")", { "blockNumber": blockNumber},
+                    function (data) {
+                        blockNumber = blockNumber + 1;
+                        noMoreData = data.NoMoreData;
+                        $("#publicationListDiv").append(data.HTMLString);
+                        $("#loadingDiv").hide();
+                        inProgress = false;
+                    });
+        }
+    </script>
+}

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<PurpleNetwork.Models.PublicationViewModel>
+
+@foreach (var p in Model)
+{
+    <div class="row">
+        <div class="col l8 offset-l2 s12">
+            <div class="card-panel grey lighten-5 z-depth-1">
+                <div class="publication-wrapper">
+                    <div class="publication">
+                        <div class="publication-author">
+                            <a href="/?email=@p.UserId">
+                                <img src="@p.UserAvatarUrl" class="circle responsive-img hide-on-small-only">
+                                <b>@p.UserFirstName <br />@p.UserLastName</b>
+                            </a>
+                            <br />
+                            <small>@p.Date</small>
+                        </div>
+                        <div class="publication-content">
+                            <span class="black-text">
+                                <h6>@p.Name</h6>
+                                <p>@p.Description</p>
+                            </span>
+                            @if (p.ImageUrl != null)
+                             {
+                            <img src="@p.ImageUrl" class="publication-img responsive-img materialboxed">
+                            }
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+   </div>
+}
