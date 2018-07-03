@@ -83,10 +83,9 @@ ul.sidenav li a.active {
     color: aqua !important;
 }
 
-.loginOrRegisterWrapper {
-   
-    padding: 20px;
-    height: 100%;
+.loginOrRegisterWrapper {   
+    padding-top: 100px;
+    height: 100vh;
 }
 
 .tabs .tab a {
@@ -107,17 +106,17 @@ ul.sidenav li a.active {
 }
 
 .input-field input {
-   color: white;
+   
 }
 
  .input-field input + label {
-   color: white !important;
+   
  }
 
  /* label underline focus color */
  .row .input-field input:focus {
-   border-bottom: 1px solid white !important;
-   box-shadow: 0 1px 0 0 white !important
+   border-bottom: 1px solid blueviolet !important;
+   box-shadow: 0 1px 0 0 blueviolet !important
  }
 
 @keyframes animatedBackground {
