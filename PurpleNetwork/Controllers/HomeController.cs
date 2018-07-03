@@ -9,8 +9,6 @@ using PurpleNetwork.DAL.Entities;
 using System.Data.Entity;
 using PurpleNetwork.DAL.Repositories;
 using PurpleNetwork.DAL.Interfaces;
-
-
 using PurpleNetwork.Infrastucture;
 using System.IO;
 using PurpleNetwork.DAL.Infrastucture;
@@ -166,6 +164,10 @@ namespace PurpleNetwork.Controllers
         [HttpPost]
         public ActionResult EditUserInfo(EditUserViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Settings", model);
+            }
             ApplicationUser user = this.userRepository.GetUserByEmail(User.Identity.Name);
 
             user.FirstName = model.FirstName;

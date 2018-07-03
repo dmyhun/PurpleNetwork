@@ -17,8 +17,5 @@ namespace PurpleNetwork.Models
         public string Description { get; set; }
 
         public HttpPostedFileBase UploadAvatar { get; set; }
-                
-        public string TestVal { get; set; }
-
     }
 }
