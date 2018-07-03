@@ -1,9 +1,41 @@
-﻿
+﻿@model PurpleNetwork.Models.EditUserViewModel
+
+
 @{
     ViewBag.Title = "Settings";
 }
 
 <h2>Settings</h2>
+
+@using (Html.BeginForm("EditUserInfo", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{   <div class="input-field">
+        <input value="@Model.FirstName" name="FirstName" type="text" class="validate">
+        <label for="FirstName">First Name</label>
+        @Html.ValidationMessage("FirstName", new { @class = "red-text" })
+    </div>
+    <div class="input-field">
+        <input value="@Model.LastName" name="LastName" type="text" class="validate">
+        <label for="LastName">Last Name</label>
+        @Html.ValidationMessage("LastName", new { @class = "red-text" })
+    </div>
+    <div class="input-field">
+        <input value="@Model.Description" name="Description" type="text" class="validate">
+        <label for="Description">Description</label>
+        @Html.ValidationMessage("Description", new { @class = "red-text" })
+    </div>
+
+    <div class="file-field input-field">
+        <div class="btn purple">
+            <span>File</span>
+            <input type="file" name="UploadAvatar" accept="image/*">
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate" name="TestVal" type="text">
+        </div>
+    </div>
+
+    <button type="submit" class="waves-effect waves-light btn purple">Save Changes</button>
+}
 
 @section scripts {
     <script>

@@ -196,6 +196,7 @@
     <Compile Include="Infrastucture\JsonModel.cs" />
     <Compile Include="Infrastucture\ModelMapper.cs" />
     <Compile Include="Infrastucture\NinjectRegistrations.cs" />
+    <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\LoginOrRegister.cs" />
     <Compile Include="Models\PublicationViewModel.cs" />

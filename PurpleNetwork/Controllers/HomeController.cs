@@ -72,6 +72,28 @@ namespace PurpleNetwork.Controllers
             return Json(jsonModel);
         }
 
+        [HttpPost]
+        public ActionResult AddPublication(PublicationViewModel publication, HttpPostedFileBase uploadFile)
+        {
+            Publication p = new Publication
+            {
+                Id = Guid.NewGuid(),
+                Date = DateTime.Now,
+                UserId = publication.UserId,
+                Name = publication.Name,
+                Description = publication.Description
+            };
+            if (uploadFile != null && uploadFile.ContentLength > 0)
+            {
+                string path = "/Temp/Publications/" + p.Id.ToString() + Path.GetExtension(uploadFile.FileName);
+                string filePath = Path.Combine(Server.MapPath(path));
+                uploadFile.SaveAs(filePath);
+                p.ImageUrl = path;
+            }
+            mainRepository.AddPublication(p);
+            return RedirectToAction("Info");
+        }
+
         public ActionResult Subscriptions(string follower)
         {
             if (follower == null)
@@ -94,11 +116,7 @@ namespace PurpleNetwork.Controllers
             }
             return View(subscriptions);
         }
-
-        public ActionResult Feed()
-        {   
-            return View();
-        }
+       
 
         public ActionResult Search()
         {
@@ -138,29 +156,33 @@ namespace PurpleNetwork.Controllers
 
         public ActionResult Settings()
         {
-            return View();
+            ApplicationUser user = this.userRepository.GetUserByEmail(User.Identity.Name);
+
+            EditUserViewModel userVM = ModelMapper.MapEditUser(user);
+
+            return View(userVM);
         }
 
         [HttpPost]
-        public ActionResult AddPublication(PublicationViewModel publication, HttpPostedFileBase uploadFile)
+        public ActionResult EditUserInfo(EditUserViewModel model)
         {
-            Publication p = new Publication
+            ApplicationUser user = this.userRepository.GetUserByEmail(User.Identity.Name);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Description = model.Description;
+
+            if (model.UploadAvatar != null && model.UploadAvatar.ContentLength > 0)
             {
-                Id = Guid.NewGuid(),
-                Date = DateTime.Now,
-                UserId = publication.UserId,
-                Name = publication.Name,
-                Description = publication.Description
-            };
-            if (uploadFile != null && uploadFile.ContentLength > 0)
-            {
-                string path = "/Temp/Publications/" + p.Id.ToString() + Path.GetExtension(uploadFile.FileName);
+                string path = "/Temp/Avatars/" + user.Id.ToString() + Path.GetExtension(model.UploadAvatar.FileName);
                 string filePath = Path.Combine(Server.MapPath(path));
-                uploadFile.SaveAs(filePath);
-                p.ImageUrl = path;
+                model.UploadAvatar.SaveAs(filePath);
+                user.ImageUrl = path;
             }
-            mainRepository.AddPublication(p);
-            return RedirectToAction("Info");
+
+            userRepository.EditUser(user);
+
+            return RedirectToAction("Info", "Home");
         }
 
         [HttpPost]
@@ -177,6 +199,11 @@ namespace PurpleNetwork.Controllers
             var me = User.Identity.Name;
             mainRepository.DeleteSubscription(me, following);
             return RedirectToAction("Subscriptions", new { follower = me });
+        }
+
+        public ActionResult Feed()
+        {
+            return View();
         }
 
         [HttpPost]

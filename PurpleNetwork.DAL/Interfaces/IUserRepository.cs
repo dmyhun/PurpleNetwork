@@ -14,5 +14,7 @@ namespace PurpleNetwork.DAL.Interfaces
         IEnumerable<ApplicationUser> GetUsers();
 
         IEnumerable<ApplicationUser> GetUsers(Func<ApplicationUser, bool> predicate);
+
+        void EditUser(ApplicationUser user);
     }
 }

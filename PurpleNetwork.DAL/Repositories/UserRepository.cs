@@ -2,6 +2,7 @@
 using PurpleNetwork.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,12 @@ namespace PurpleNetwork.DAL.Repositories
         public UserRepository()
         {
             this.applicationContext = new ApplicationContext();
+        }
+
+        public void EditUser(ApplicationUser user)
+        {
+            applicationContext.Entry(user).State = EntityState.Modified;
+            applicationContext.SaveChanges();
         }
 
         public ApplicationUser GetUserByEmail(string email)

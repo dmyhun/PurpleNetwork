@@ -40,8 +40,7 @@ namespace PurpleNetwork.Infrastucture
             };
 
             return result;
-        }
-        
+        }        
 
         public static UserViewModel MapUser(ApplicationUser user)
         {
@@ -53,6 +52,18 @@ namespace PurpleNetwork.Infrastucture
                 ImageUrl = user.ImageUrl,
                 Description = user.Description,
                 Email = user.Email
+            };
+
+            return result;
+        }
+
+        public static EditUserViewModel MapEditUser(ApplicationUser user)
+        {
+            EditUserViewModel result = new EditUserViewModel
+            {               
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Description = user.Description
             };
 
             return result;
