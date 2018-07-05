@@ -57,6 +57,21 @@ namespace PurpleNetwork.Infrastucture
             return result;
         }
 
+        public static ApplicationUser MapUserRegister(RegisterModel model)
+        {
+            ApplicationUser result = new ApplicationUser
+            {
+                UserName = model.EmailRegister,
+                Email = model.EmailRegister,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                ImageUrl = "https://innmind.com/assets/placeholders/no_avatar-3d6725770296b6a1cce653a203d8f85dcc5298945b71fa7360e3d9aa4a3fc054.svg",
+                Description = "Hello world! I'd like to chat and have a lot of friends :)"
+            };
+            
+            return result;
+        }
+
         public static EditUserViewModel MapEditUser(ApplicationUser user)
         {
             EditUserViewModel result = new EditUserViewModel

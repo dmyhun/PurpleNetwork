@@ -1,4 +1,5 @@
-﻿
+﻿@model PurpleNetwork.Models.LoginOrRegister
+
 @{
     Layout = null;
 }
@@ -16,6 +17,7 @@
 </head>
 <body class="purple">
     <div class="container white">
+        <h1 class="center-align">Welcome to the Purple Network!</h1>
         <div class="loginOrRegisterWrapper">
             <div class="row">
                 <div class="col s12 l6 offset-l3">
@@ -34,15 +36,14 @@
                         <div class="col s12 l6 offset-l3">
                             <form action="/Account/Login" method="post">
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                                 <div class="input-field col s12 white-text">
-                                    <input placeholder="Enter email" name="EmailLogin" type="text" class="validate">
+                                    <input name="EmailLogin" type="email" class="validate">
                                     <label for="EmailLogin">Email</label>
                                     @Html.ValidationMessage("EmailLogin", new { @class = "red-text" })
                                 </div>
                                 <div class="input-field col s12 white-text">
-                                    <input placeholder="Enter password" name="PasswordLogin" type="password" class="validate">
-                                    <label for="PasswordLogin">Email</label>
+                                    <input name="PasswordLogin" type="password" class="validate">
+                                    <label for="PasswordLogin">Password</label>
                                     @Html.ValidationMessage("PasswordLogin", new { @class = "red-text" })
                                 </div>
                                 <button type="submit" class="btn waves-effect purple darken-3 waves-light col s12" />Log In</button>
@@ -56,29 +57,28 @@
                         <div class="col s12 l6 offset-l3">
                             <form action="/Account/Register" method="post">
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                                 <div class="input-field col s12">
-                                    <input placeholder="Enter First Name" name="FirstName" type="text" class="validate">
+                                    <input name="FirstName" type="text" class="validate">
                                     <label for="FirstName">First Name</label>
                                     @Html.ValidationMessage("FirstName", new { @class = "red-text"})
                                 </div>
                                 <div class="input-field col s12">
-                                    <input placeholder="Enter Last Name" name="LastName" type="text" class="validate">
+                                    <input name="LastName" type="text" class="validate">
                                     <label for="LastName">Last Name</label>
                                     @Html.ValidationMessage("LastName", new { @class = "red-text" })
                                 </div>
                                 <div class="input-field col s12">
-                                    <input placeholder="Enter email" name="EmailRegister" type="text" class="validate">
+                                    <input name="EmailRegister" type="email" class="validate">
                                     <label for="EmailRegister">Email</label>
                                     @Html.ValidationMessage("EmailRegister", new { @class = "red-text" })
                                 </div>
                                 <div class="input-field col s12">
-                                    <input placeholder="Enter password" name="PasswordRegister" type="password" class="validate">
+                                    <input name="PasswordRegister" type="password" class="validate">
                                     <label for="PasswordRegister">Password</label>
                                     @Html.ValidationMessage("PasswordRegister", new { @class = "red-text" })
                                 </div>
                                 <div class="input-field col s12">
-                                    <input placeholder="Enter password aqain" name="PasswordConfirm" type="password">
+                                    <input name="PasswordConfirm" type="password">
                                     <label for="PasswordConfirm">Confirm Password</label>
                                     @Html.ValidationMessage("PasswordConfirm", new { @class = "red-text" })
                                 </div>

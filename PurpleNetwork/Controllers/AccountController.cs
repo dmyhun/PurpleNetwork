@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PurpleNetwork.Models;
+using PurpleNetwork.Infrastucture;
 
 namespace PurpleNetwork.Controllers
 {
@@ -33,23 +34,17 @@ namespace PurpleNetwork.Controllers
         public ActionResult LoginOrRegister(string returnUrl)
         {
             if (User.Identity.IsAuthenticated == false)
-            {
-                ViewBag.returnUrl = returnUrl;
                 return View();
-            }
             else
                 return RedirectToAction("Info", "Home");
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterModel model, string returnUrl)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.EmailRegister, Email = model.EmailRegister, FirstName = model.FirstName, LastName = model.LastName };
-                user.ImageUrl = "https://innmind.com/assets/placeholders/no_avatar-3d6725770296b6a1cce653a203d8f85dcc5298945b71fa7360e3d9aa4a3fc054.svg";
-                user.Description = "Lorem ipsum dolor sit amet, et laudem audire sea. Fugit doming appareat usu ut, aperiam legendos pertinax ne usu, in vel eros eirmod eligendi.";
-
+                ApplicationUser user = ModelMapper.MapUserRegister(model);
                 IdentityResult result = await UserManager.CreateAsync(user, model.PasswordRegister);
                 if (result.Succeeded)
                 {
@@ -60,9 +55,7 @@ namespace PurpleNetwork.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (String.IsNullOrEmpty(returnUrl))
-                        return RedirectToAction("Info", "Home");
-                    return Redirect(returnUrl);
+                    return RedirectToAction("Info", "Home");                    
                 }
                 else
                 {
@@ -77,14 +70,14 @@ namespace PurpleNetwork.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser user = await UserManager.FindAsync(model.EmailLogin, model.PasswordLogin);
                 if (user == null)
                 {
-                    ModelState.AddModelError("", "Неверный логин или пароль.");
+                    ModelState.AddModelError("PasswordLogin", "Incorrect Password of Login");
                 }
                 else
                 {
@@ -95,12 +88,9 @@ namespace PurpleNetwork.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (String.IsNullOrEmpty(returnUrl))
-                        return RedirectToAction("Info", "Home");
-                    return Redirect(returnUrl);
+                    return RedirectToAction("Info", "Home");
                 }
             }
-            ViewBag.returnUrl = returnUrl;
             return View("LoginOrRegister");
         }
 
